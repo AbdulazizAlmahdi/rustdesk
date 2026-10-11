@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+  <!-- AnyDesk double rotated overlapping square / diamond logo -->
+  <path
+      android:fillColor="#EF4444"
+      android:pathData="M24,4 L44,24 L24,44 L4,24 Z"/>
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M24,12 L36,24 L24,36 L12,24 Z"/>
+  <path
+      android:fillColor="#EF4444"
+      android:pathData="M24,18 L30,24 L24,30 L18,24 Z"/>
+</vector>

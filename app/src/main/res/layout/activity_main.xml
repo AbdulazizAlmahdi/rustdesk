@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingTop="20dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="24dp">
+
+            <!-- Top Header (RustDesk Brand Identity) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="RustDesk Logo"
+                    android:src="@drawable/ic_rustdesk_logo" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RustDesk"
+                        android:textColor="@color/text_primary"
+                        android:textSize="21sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="مستقل • P2P مباشر • مفتوح المصدر"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- Global Status Indicator Pill (AnyDesk Ergonomic Style) -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardGlobalStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/surface_variant"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="#353A47"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingStart="10dp"
+                        android:paddingTop="5dp"
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="5dp">
+
+                        <View
+                            android:id="@+id/viewStatusDot"
+                            android:layout_width="8dp"
+                            android:layout_height="8dp"
+                            android:background="@drawable/ic_rustdesk_logo"
+                            android:backgroundTint="@color/accent_amber" />
+
+                        <TextView
+                            android:id="@+id/tvHeaderStatusText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:text="جاهز"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Card 1: RustDesk "This Desk" (Host Mode / Share Screen) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/surface_variant"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="هذا الجهاز (This Device)"
+                            android:textColor="@color/text_primary"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvServerStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="متوقف"
+                            android:textColor="@color/accent_red"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="عنوانك المباشر للسماح بالتحكم بهذا الجهاز"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp" />
+
+                    <!-- Address Display Box (Big Monospace font like AnyDesk ID) -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardAddressBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:cardBackgroundColor="@color/surface_variant"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="#353A47"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="14dp"
+                            android:paddingTop="10dp"
+                            android:paddingEnd="12dp"
+                            android:paddingBottom="10dp">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="عنوان IP والمنفذ المباشر"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="11sp" />
+
+                                <TextView
+                                    android:id="@+id/tvLocalIp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="2dp"
+                                    android:fontFamily="monospace"
+                                    android:text="127.0.0.1:8443"
+                                    android:textColor="@color/text_primary"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <ImageButton
+                                android:id="@+id/btnCopyAddress"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="?attr/selectableItemBackgroundBorderless"
+                                android:contentDescription="نسخ العنوان"
+                                android:src="@drawable/ic_copy" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- PIN & Port Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvLocalPin"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="رمز المرور (PIN): 123456"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tvLocalPort"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="المنفذ: 8443"
+                            android:textColor="@color/text_muted"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <!-- Share / Stop Action Button (RustDesk Signature Blue) -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnToggleServer"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="14dp"
+                        android:backgroundTint="@color/rustdesk_blue"
+                        android:fontFamily="sans-serif-medium"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:text="بدء مشاركة هذا الجهاز"
+                        android:textColor="@color/on_primary"
+                        android:textSize="15sp"
+                        app:cornerRadius="12dp"
+                        app:icon="@drawable/ic_screen_share"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card 2: RustDesk "Remote Desk" (Viewer Mode / Remote Desktop) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/surface"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/surface_variant"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="التحكم بجهاز عن بعد (Remote Desktop)"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="أدخل عنوان الجهاز البعيد للاتصال المباشر"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp" />
+
+                    <!-- Quick Connect Input Bar (AnyDesk Arrow Connect Button Ergonomics with RustDesk Blue) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            app:boxBackgroundColor="@color/surface_variant"
+                            app:boxCornerRadiusBottomEnd="12dp"
+                            app:boxCornerRadiusBottomStart="12dp"
+                            app:boxCornerRadiusTopEnd="12dp"
+                            app:boxCornerRadiusTopStart="12dp"
+                            app:boxStrokeColor="@color/rustdesk_blue"
+                            app:boxStrokeWidth="1dp"
+                            app:hintTextColor="@color/rustdesk_blue"
+                            app:placeholderText="192.168.1.50 أو 127.0.0.1">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etTargetIp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="عنوان IP للجهاز البعيد"
+                                android:inputType="textUri"
+                                android:textColor="@color/text_primary"
+                                android:textSize="15sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Iconic Connect Button (RustDesk Blue) -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnConnectDirect"
+                            android:layout_width="54dp"
+                            android:layout_height="54dp"
+                            android:backgroundTint="@color/rustdesk_blue"
+                            android:contentDescription="اتصال"
+                            android:insetLeft="0dp"
+                            android:insetTop="0dp"
+                            android:insetRight="0dp"
+                            android:insetBottom="0dp"
+                            android:padding="0dp"
+                            app:cornerRadius="14dp"
+                            app:icon="@drawable/ic_arrow_forward"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp"
+                            app:iconSize="26dp" />
+                    </LinearLayout>
+
+                    <!-- Secondary Settings: PIN and Port -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            app:boxBackgroundColor="@color/surface_variant"
+                            app:boxCornerRadiusBottomEnd="12dp"
+                            app:boxCornerRadiusBottomStart="12dp"
+                            app:boxCornerRadiusTopEnd="12dp"
+                            app:boxCornerRadiusTopStart="12dp"
+                            app:boxStrokeColor="@color/rustdesk_blue"
+                            app:boxStrokeWidth="1dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etTargetPin"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="رمز PIN (الافتراضي 123456)"
+                                android:inputType="numberPassword"
+                                android:text="123456"
+                                android:textColor="@color/text_primary"
+                                android:textSize="13sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            app:boxBackgroundColor="@color/surface_variant"
+                            app:boxCornerRadiusBottomEnd="12dp"
+                            app:boxCornerRadiusBottomStart="12dp"
+                            app:boxCornerRadiusTopEnd="12dp"
+                            app:boxCornerRadiusTopStart="12dp"
+                            app:boxStrokeColor="@color/rustdesk_blue"
+                            app:boxStrokeWidth="1dp">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etTargetPort"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="المنفذ"
+                                android:inputType="number"
+                                android:text="8443"
+                                android:textColor="@color/text_primary"
+                                android:textSize="13sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <!-- Recent Sessions (History Chips) -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:text="جلسات سريعة (Recent Sessions)"
+                        android:textColor="@color/text_muted"
+                        android:textSize="11sp" />
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroupRecent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp">
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipLocalhost"
+                            style="@style/Widget.Material3.Chip.Assist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="127.0.0.1:8443"
+                            android:textColor="@color/text_secondary"
+                            app:chipBackgroundColor="@color/surface_variant"
+                            app:chipStrokeColor="#353A47" />
+
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chipLan"
+                            style="@style/Widget.Material3.Chip.Assist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="192.168.1.100"
+                            android:textColor="@color/text_secondary"
+                            app:chipBackgroundColor="@color/surface_variant"
+                            app:chipStrokeColor="#353A47" />
+                    </com.google.android.material.chip.ChipGroup>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Bottom Security Note -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="RustDesk Standalone • اتصال P2P مشفر ومباشر • خصوصية تامة"
+                android:textColor="@color/text_muted"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
