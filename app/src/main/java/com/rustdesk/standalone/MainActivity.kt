@@ -25,6 +25,12 @@ class MainActivity : AppCompatActivity() {
     private val localPin = "123456"
     private var currentIp = "127.0.0.1"
 
+    private val serviceStateListener: (Boolean) -> Unit = { running ->
+        runOnUiThread {
+            updateServerUi(running)
+        }
+    }
+
     private val mediaProjectionLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -36,7 +42,6 @@ class MainActivity : AppCompatActivity() {
                 localPort,
                 localPin
             )
-            updateServerUi(true)
             Toast.makeText(this, "بدأ بث RustDesk بنجاح (Port: $localPort)", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "تم رفض إذن مشاركة الشاشة", Toast.LENGTH_SHORT).show()
@@ -60,11 +65,18 @@ class MainActivity : AppCompatActivity() {
         setupDeviceInfo()
         setupListeners()
         requestRequiredPermissions()
+
+        ScreenCaptureService.addRunningStateListener(serviceStateListener)
     }
 
     override fun onResume() {
         super.onResume()
         updateServerUi(ScreenCaptureService.isRunning)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ScreenCaptureService.removeRunningStateListener(serviceStateListener)
     }
 
     private fun setupDeviceInfo() {
@@ -76,23 +88,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        // Copy Address Listener
+        // Copy Address Listener with tactile feedback and animation
         val copyAction = {
             val address = "$currentIp:$localPort"
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip = ClipData.newPlainText("RustDesk Address", address)
             clipboard.setPrimaryClip(clip)
+            binding.btnCopyAddress.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+            binding.btnCopyAddress.animate()
+                .scaleX(0.85f).scaleY(0.85f).setDuration(100)
+                .withEndAction {
+                    binding.btnCopyAddress.animate().scaleX(1.0f).scaleY(1.0f).setDuration(100).start()
+                }.start()
             Toast.makeText(this, "تم نسخ العنوان: $address", Toast.LENGTH_SHORT).show()
         }
 
         binding.btnCopyAddress.setOnClickListener { copyAction() }
         binding.cardAddressBox.setOnClickListener { copyAction() }
 
-        // Host Button
+        // Host Button with immediate state toggle & tactile feedback
         binding.btnToggleServer.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
             if (ScreenCaptureService.isRunning) {
                 ScreenCaptureService.stopService(this)
-                updateServerUi(false)
                 Toast.makeText(this, "تم إيقاف مشاركة الشاشة", Toast.LENGTH_SHORT).show()
             } else {
                 val mpManager = getSystemService(Context.MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
@@ -100,8 +118,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Viewer Button (Connect)
+        // Viewer Button (Connect) with debounce protection
+        var lastConnectClickTime = 0L
         binding.btnConnectDirect.setOnClickListener {
+            val now = android.os.SystemClock.elapsedRealtime()
+            if (now - lastConnectClickTime < 1000L) return@setOnClickListener
+            lastConnectClickTime = now
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
+
             val targetIpInput = binding.etTargetIp.text.toString().trim()
             val targetPortStr = binding.etTargetPort.text.toString().trim()
             val targetPin = binding.etTargetPin.text.toString().trim()
@@ -126,13 +150,15 @@ class MainActivity : AppCompatActivity() {
             RemoteViewActivity.start(this, targetHost, targetPort, targetPin)
         }
 
-        // Recent Chips
+        // Recent Chips with tactile feedback
         binding.chipLocalhost.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
             binding.etTargetIp.setText("127.0.0.1")
             binding.etTargetPort.setText("8443")
         }
 
         binding.chipLan.setOnClickListener {
+            it.performHapticFeedback(android.view.HapticFeedbackConstants.KEYBOARD_TAP)
             binding.etTargetIp.setText("192.168.1.100")
             binding.etTargetPort.setText("8443")
         }

@@ -34,9 +34,37 @@ class ScreenCaptureService : Service() {
         const val EXTRA_PORT = "extra_port"
         const val EXTRA_PIN = "extra_pin"
 
+        private val mainHandler = android.os.Handler(android.os.Looper.getMainLooper())
+        private val listeners = java.util.concurrent.CopyOnWriteArrayList<(Boolean) -> Unit>()
+
+        @Volatile
         var isRunning = false
+            set(value) {
+                if (field != value) {
+                    field = value
+                    notifyListeners(value)
+                }
+            }
+
+        private fun notifyListeners(running: Boolean) {
+            mainHandler.post {
+                for (listener in listeners) {
+                    listener(running)
+                }
+            }
+        }
+
+        fun addRunningStateListener(listener: (Boolean) -> Unit) {
+            listeners.add(listener)
+            listener(isRunning)
+        }
+
+        fun removeRunningStateListener(listener: (Boolean) -> Unit) {
+            listeners.remove(listener)
+        }
 
         fun startService(context: Context, resultCode: Int, data: Intent, port: Int, pin: String) {
+            isRunning = true
             val intent = Intent(context, ScreenCaptureService::class.java).apply {
                 putExtra(EXTRA_RESULT_CODE, resultCode)
                 putExtra(EXTRA_RESULT_DATA, data)
@@ -51,6 +79,7 @@ class ScreenCaptureService : Service() {
         }
 
         fun stopService(context: Context) {
+            isRunning = false
             context.stopService(Intent(context, ScreenCaptureService::class.java))
         }
     }
